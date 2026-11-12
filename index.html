@@ -276,6 +276,14 @@ for(const id in byB){
  NB[id]=[+X.toFixed(1),+Y.toFixed(1),T(list[0].x['المنطقة'])];
  newPts.push([+X.toFixed(1),+Y.toFixed(1),0,0,0,0,+id]);
 }
+// مباني ممسوحة بلا محلات (من buildings.json) بإحداثيات من new_buildings.csv
+try{const xb=new XMLHttpRequest();xb.open("GET","buildings.json?"+Date.now(),false);xb.send();if(xb.status==200){const bjn=JSON.parse(xb.responseText),seen={};
+ (bjn.results||[]).forEach(r=>{const x=r.result||{},id=T(x['رقم المبنى']);if(!id||id==='0'||D0.sh[id]||sh[id]||seen[id]&&seen[id]['التاريخ']>=x['التاريخ'])return;seen[id]=x});
+ for(const id in seen){const c=C[id];if(!c||!c.lat||!c.lng||!c.zone)continue;const x=seen[id],[X,Y]=xy(c.lat,c.lng);
+  let best=null,bd=1e18;D0.pts.forEach(p=>{const d=(p[0]-X)**2+(p[1]-Y)**2;if(d<bd){bd=d;best=p[6]}});
+  const nb=D0.sh[best]||{},ow=OW[T(x['حالة النزع'])]||T(x['حالة النزع'])||nb.o;
+  sh[id]={z:c.zone,o:ow,nz:c.zone,h:hrv(c.lat,c.lng),m:MKT[id]||'لاينطبق',s:[],ns:1};rx[id]=[];
+  NB[id]=[+X.toFixed(1),+Y.toFixed(1),T(x['المنطقة ( الزون )'])];newPts.push([+X.toFixed(1),+Y.toFixed(1),0,0,0,0,+id])}}}catch(e){}
 const pts=D0.pts.concat(newPts).map(p=>{const id=p[6],s=sh[id].s,r=rx[id],o=D0.pts.find?null:null;
  return[p[0],p[1],s.length,s.filter(v=>v[1]=='مفتوح').length,r.filter(v=>v[0]==0).length,NB[id]?r.filter(v=>v[1]==0).length:p[5],id]});
 const zs={};
@@ -383,7 +391,7 @@ s.innerHTML=`<div class="dh"><div class="bimg">${BUILDING_IMAGES[b.id]?`<button 
 <h2 style="font-size:15px;margin-top:6px">حالة الرخص</h2><div class="bar" style="height:14px">${bar(b.l,b.n,LK,LC)}${nl?`<i style="width:${nl/b.n*100}%;background:var(--line)"></i>`:''}</div>
 <div class="lg">${LK.filter(k=>b.l[k]).map(k=>`<span><s style="--c:var(${LC[k]})"></s>${k} <b>${b.l[k]}</b></span>`).join('')}<span><s style="--c:var(--line)"></s>بدون رخصة مسجلة <b>${nl}</b></span></div></div></div>
 <div class="chips" role="group" aria-label="تصفية المحلات">${chip('fs','all','كل الحالات')}${SK.filter(k=>b.c[k]).map(k=>chip('fs',k,`${k} (${b.c[k]})`)).join('')}<em>الرخصة:</em>${chip('fl','all','الكل')}${LK.filter(k=>b.l[k]).map(k=>chip('fl',k,`${k} (${b.l[k]})`)).join('')}</div>
-<div class="sg">${ls.map(x=>`<article class="sh k${HL==b.id+'|'+b.s.indexOf(x)?' hl':''}" style="--c:var(${SC[x[1]]||'--unused'});--kc:${CM[catOf(x[0],(D.rx[b.id][b.s.indexOf(x)]||[])[7]||(D.rx[b.id][b.s.indexOf(x)]||[])[23])][0]}">${icoHTML(b.id,b.s.indexOf(x),x[0])}<div class="sht"><h3>${esc(x[0])}</h3><span class="pill">${x[1]}</span><button class="rb" data-r="${b.id}|${b.s.indexOf(x)}">تقرير</button></div><div class="lic">${x[2]||x[3]?`<span class="num">${esc(x[2]||'—')}</span>${x[3]?`<span class="pill" style="--c:var(${LC[x[3]]||'--unused'})">${x[3]}</span>`:''}`:'<span class="mut">لا توجد رخصة مسجلة</span>'}</div>${expLine(b.id,b.s.indexOf(x))}<div class="ph">${th(x[4],'صورة الباب')}${th(x[5],'صورة الرخصة')}</div></article>`).join('')||'<p class="empty">لا توجد محلات بهذه التصفية.</p>'}</div>`}
+<div class="sg">${ls.map(x=>`<article class="sh k${HL==b.id+'|'+b.s.indexOf(x)?' hl':''}" style="--c:var(${SC[x[1]]||'--unused'});--kc:${CM[catOf(x[0],(D.rx[b.id][b.s.indexOf(x)]||[])[7]||(D.rx[b.id][b.s.indexOf(x)]||[])[23])][0]}">${icoHTML(b.id,b.s.indexOf(x),x[0])}<div class="sht"><h3>${esc(x[0])}</h3><span class="pill">${x[1]}</span><button class="rb" data-r="${b.id}|${b.s.indexOf(x)}">تقرير</button></div><div class="lic">${x[2]||x[3]?`<span class="num">${esc(x[2]||'—')}</span>${x[3]?`<span class="pill" style="--c:var(${LC[x[3]]||'--unused'})">${x[3]}</span>`:''}`:'<span class="mut">لا توجد رخصة مسجلة</span>'}</div>${expLine(b.id,b.s.indexOf(x))}<div class="ph">${th(x[4],'صورة الباب')}${th(x[5],'صورة الرخصة')}</div></article>`).join('')||'<p class="empty">'+(b.n?'لا توجد محلات بهذه التصفية.':'مبنى ممسوح ولا يوجد به محلات.')+'</p>'}</div>`}
 let HL=null;
 const AD='٠١٢٣٤٥٦٧٨٩',nz=t=>String(t||'').replace(/[\u064B-\u065F\u0640]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').replace(/\s+/g,' ').trim().toLowerCase();
 const SI=[];BL.forEach(b=>b.s.forEach((x,i)=>SI.push({b:b.id,z:b.z,i,n:x[0],k:nz(x[0])+' '+String(x[2]||''),lic:String(x[2]||''),st:x[1]})));
@@ -909,6 +917,15 @@ document.querySelector('.navb')&&document.querySelector('.navb').insertAdjacentH
 window.addEventListener('hashchange',route);
 draw();route();
 setInterval(()=>{const n=off(13);if(DY[0]!=n){mkDays();draw();if(!pg.hidden)route()}},60000);
+
+/* بطاقة: مباني ممسوحة بدون محلات (تُحسب ضمن إجمالي المباني) */
+if(!FB){const _own=new Set(SH.map(r=>r.b));Object.keys(D.sh||{}).forEach(k=>_own.add(String(k)));
+ const UNM=[...new Set(BD.map(r=>r.b).filter(b=>b&&b!=='0'&&!_own.has(String(b))))];
+ const NSB=BL.filter(b=>!b.n).map(b=>b.id).concat(UNM);window.NSB=NSB;
+ const _k=ksDraw;ksDraw=function(){_k();const ks=$('ks');if(!ks)return;const d=ks.children;
+  if(d[1]){d[1].querySelector('b').textContent=f(BL.length+UNM.length);d[1].querySelector('span').textContent='مبنى ممسوح'}
+  const x=document.createElement('div');x.style.setProperty('--kc','#4FB8A5');x.innerHTML='<b>'+f(NSB.length)+'</b><span>مباني بدون محلات</span>';ks.appendChild(x)};
+ ksDraw()}
 })();
 
 </script></body></html>
