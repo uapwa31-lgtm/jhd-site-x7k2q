@@ -1175,7 +1175,7 @@ svg.hv{cursor:crosshair}
 .hero .hh .hl,.hero .hh h1{text-shadow:0 2px 10px #000}
 .hero .hh .hnav .hb:not(.pri){background:#0b1a20cc}
 
-#zs{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:12px}#zs .zc[data-z="4.3"],#zs .zc[data-z="5.1"]{display:none!important}
+body.ex3 #zs{grid-area:zr;margin:0;max-height:none;overflow:visible;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:12px;align-items:stretch!important}#zs .zc{height:100%}#zs .zc[data-z="4.3"],#zs .zc[data-z="5.1"]{display:none!important}
 @media(max-width:1000px){#zs{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 .nwt{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 18px}.nwt th{font-size:12px;color:var(--mut);font-weight:500;text-align:right;padding:6px 8px;border-bottom:1px solid var(--line)}.nwt td{padding:7px 8px;border-bottom:1px solid var(--line)}
 .nwc{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.nwc button{font:inherit;font-size:13px;padding:6px 14px;border-radius:99px;border:1px solid #2b4350;background:none;color:var(--ink);cursor:pointer}.nwc button[aria-pressed=true]{background:#E9EFEE;color:#0A1316;font-weight:800}
@@ -1221,8 +1221,8 @@ body.ex3 #exst{display:none!important}
 .zx:hover{background:rgba(120,160,165,.12)}.zx.on{border-color:var(--open);background:rgba(60,201,181,.1)}
 .zx b{min-width:34px;font-size:14px;color:#fff}.zx .tk{flex:1;height:9px;background:#3b5560;border-radius:99px;overflow:hidden}.zx .tk i{display:block;height:100%;background:var(--open);border-radius:99px}
 .zx span{min-width:40px;text-align:left;font-size:12px;color:#fff;font-variant-numeric:tabular-nums}.zx em{font-style:normal;min-width:28px;text-align:left;font-size:10.5px;color:var(--mut)}
-body.ex3 .lm{grid-template-areas:"bc bc bc" "zs mp p1" "zs tb p2" "zs tb p2" "bd bd bd";grid-template-rows:auto auto auto auto auto}#tbw{align-self:start}body.ex3 .main>.c:first-child{min-height:520px}
-body.ex3.hasb .lm{grid-template-areas:"bc bc bc" "zs mp p2" "zs tb p2" "zs tb p2" "bd bd bd"}
+body.ex3 .lm{grid-template-areas:"bc bc bc" "zr zr zr" "zs mp p1" "zs tb p2" "zs tb p2" "bd bd bd";grid-template-rows:auto auto auto auto auto auto}#tbw{align-self:start}body.ex3 .main>.c:first-child{min-height:520px}
+body.ex3.hasb .lm{grid-template-areas:"bc bc bc" "zr zr zr" "zs mp p2" "zs tb p2" "zs tb p2" "bd bd bd"}
 body.ex3.hasb #exdw{display:none}
 #mfl,#mlg{display:none!important}#tbw[hidden]{display:none!important}#tbw{grid-area:tb;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;min-width:0}
 #tbw h3{margin:0 0 8px;font-size:14px;font-weight:600}#tbw h3 b{color:var(--open)}
