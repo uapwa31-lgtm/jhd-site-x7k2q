@@ -1150,6 +1150,16 @@ const sc=k=>'var('+(SC[k]||'--unused')+')',lc=k=>'var('+(LC[k]||'--unused')+')';
 
 /* ---------- CSS ---------- */
 const css=document.createElement('style');css.textContent=`
+.hero .hh{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px}
+.hero .hh .hr{display:flex;justify-content:flex-start}.hero .hh .hc{text-align:center}.hero .hh .hc h1{margin:0;font-size:32px}
+.hero .hh .hl{display:flex;flex-direction:column;align-items:flex-end;gap:6px;color:#ffffffb3;font-size:13px}.hero .hh .hl .tdy{flex-basis:auto;color:#ffffffb3}
+.hero .hh .hnav{flex-direction:column;align-items:stretch;gap:8px}.hero .hh .hnav .hb{justify-content:center}
+.hero #sub{display:none!important}
+.hero .in>.gs{margin-top:10px}
+.gz{position:relative;margin:0 0 12px;display:block}.gz input[type=search]{width:100%;box-sizing:border-box;font:inherit;font-size:13px;padding:9px 14px;border-radius:99px;border:1px solid var(--line);background:#fff;color:#11303A}
+body.ex3 #exl.zl2{overflow:visible!important}.gz #gr{width:min(460px,92vw)!important;inset-inline-start:auto;inset-inline-end:auto;left:auto;right:0}
+@media(max-width:700px){.hero .hh{grid-template-columns:1fr;justify-items:center}.hero .hh .hl{align-items:center}.hero .hh .hnav{flex-direction:row;flex-wrap:wrap}}
+
 .hero .ttl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.hero .ttl h1{margin:0}
 .hnav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;position:relative}
 .hnav .hb{font:inherit;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;border:1px solid #ffffff3d;background:#ffffff14;color:#fff;cursor:pointer;white-space:nowrap}
@@ -1179,7 +1189,7 @@ const css=document.createElement('style');css.textContent=`
 #nx .vd svg{width:100%;height:110px;display:block}
 @media(max-width:1000px){#nx .nxg{grid-template-columns:1fr}#nx .vd{border:0;padding:0}#nx .kr{grid-template-columns:repeat(2,1fr)}}
 body.ex3 #exst{display:none!important}
-#nx2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 14px}@media(max-width:1000px){#nx2{grid-template-columns:minmax(0,1fr)}}
+#nx2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0 0}@media(max-width:1000px){#nx2{grid-template-columns:minmax(0,1fr)}}
 #nx2 .pc{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--k);border-radius:14px;padding:14px 16px;min-width:0}
 #nx2 h4{margin:0 0 6px;font-size:14px;color:var(--mut);font-weight:500;display:flex;gap:8px;align-items:center}#nx2 h4 i{width:9px;height:9px;border-radius:50%;background:var(--k)}#nx2 h4 span{margin-inline-start:auto;font-size:11.5px}
 #nx2 .pr{display:flex;align-items:flex-end;gap:16px;justify-content:space-between}#nx2 .pq b{font-size:36px;font-variant-numeric:tabular-nums;line-height:1.1;display:block}#nx2 .pq span{font-size:12px;color:var(--mut)}
@@ -1191,8 +1201,8 @@ body.ex3 #exst{display:none!important}
 .zx:hover{background:rgba(120,160,165,.12)}.zx.on{border-color:var(--open);background:rgba(60,201,181,.1)}
 .zx b{min-width:34px;font-size:14px;color:#fff}.zx .tk{flex:1;height:9px;background:#3b5560;border-radius:99px;overflow:hidden}.zx .tk i{display:block;height:100%;background:var(--open);border-radius:99px}
 .zx span{min-width:40px;text-align:left;font-size:12px;color:#fff;font-variant-numeric:tabular-nums}.zx em{font-style:normal;min-width:28px;text-align:left;font-size:10.5px;color:var(--mut)}
-body.ex3 .lm{grid-template-areas:"bc bc bc" "zs mp p1" "zs mp p2" "zs tb p2" "bd bd bd";grid-template-rows:auto 520px 440px auto auto}
-body.ex3.hasb .lm{grid-template-areas:"bc bc bc" "zs mp p2" "zs mp p2" "zs tb p2" "bd bd bd"}
+body.ex3 .lm{grid-template-areas:"bc bc bc" "zs mp p1" "zs tb p2" "zs tb p2" "bd bd bd";grid-template-rows:auto auto auto auto auto}#tbw{align-self:start}body.ex3 .main>.c:first-child{min-height:520px}
+body.ex3.hasb .lm{grid-template-areas:"bc bc bc" "zs mp p2" "zs tb p2" "zs tb p2" "bd bd bd"}
 body.ex3.hasb #exdw{display:none}
 #mfl,#mlg{display:none!important}#tbw[hidden]{display:none!important}#tbw{grid-area:tb;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;min-width:0}
 #tbw h3{margin:0 0 8px;font-size:14px;font-weight:600}#tbw h3 b{color:var(--open)}
@@ -1226,6 +1236,15 @@ if(h1&&!hero.querySelector('.hnav')){
  const nav=document.createElement('div');nav.className='hnav';
  nav.innerHTML='<button class="hb pri" type="button" data-hn="home">🏠 الرئيسية</button><button class="hb" type="button" data-hn="menu" aria-haspopup="true">☰ الصفحات ▾</button><button class="hb" type="button" data-hn="reset" title="مسح كل الفلاتر والتحديدات">↺ تصفير الكل</button><div class="hm" id="hmenu"><a href="#/inspectors">📊 إحصائيات المفتشين</a><a href="#/dash">🗂️ الداشبورد التفصيلي</a></div>';
  w.appendChild(nav)}
+if(!hero.querySelector('.hh')){
+ const hh=document.createElement('div');hh.className='hh';
+ const hr=document.createElement('div');hr.className='hr';const hc=document.createElement('div');hc.className='hc';const hl=document.createElement('div');hl.className='hl';
+ const hn=hero.querySelector('.hnav'),h1b=hero.querySelector('h1'),br=hero.querySelector('.brand'),td=$('tdy');
+ if(h1b)h1b.textContent='المسح الميداني';
+ if(hn)hr.appendChild(hn);if(h1b)hc.appendChild(h1b);if(br)hl.appendChild(br);if(td)hl.appendChild(td);
+ hh.append(hr,hc,hl);const tt=hero.querySelector('.ttl');if(tt)tt.remove();
+ const inn=hero.querySelector('.in');hero.insertBefore(hh,hero.firstChild);
+ const gi=$('gs'),gx=$('gr');if(gi){const gz=document.createElement('div');gz.className='gs gz';gz.id='gsz';gz.append(gi);if(gx)gz.append(gx);window._gsz=gz;(inn||hero).appendChild(gz)}}
 
 /* ---------- حالة الفترة والهدف ---------- */
 const P={k:'all',from:'',to:''};let goalEdit=false;
@@ -1289,7 +1308,7 @@ function cardsDraw(){const SA=shopsAll(),BD2=(window.JBD||[]);
   <div class="pr"><div class="pq"><b>${fm(cur)}</b><span>${unit} · ${perLabel()}</span><div class="pv">${prv==null?'لا توجد فترة سابقة للمقارنة':'الفترة السابقة '+fm(prv)+chg(cur,prv)}</div></div>${spark(m)}</div>
   <table><tr><th></th><th>الحالي</th><th>السابق</th><th>التغيّر</th></tr>${row('اليوم / أمس',fn([t,t]),fn([y,y]))}${row('آخر 7 أيام',fn(wk),fn(pw))}${row('آخر 30 يوماً',fn(mo),fn(pm))}</table></div>`};
  const un=Math.max(0,(window.NSB||[]).length-BL.filter(b=>!b.n).length),bTot=BL.length+un;
- let e=$('nx2');if(!e){e=document.createElement('section');e.id='nx2';const n=$('nx');n.parentNode.insertBefore(e,n.nextSibling)}
+ let e=$('nx2');if(!e){e=document.createElement('section');e.id='nx2';const n=$('nx');n.parentNode.insertBefore(e,n)}
  const html=mk('b','المباني الممسوحة','#5AA9E6',bd,rr=>rr?bsum(rr):bTot,bTot,'مبنى')+mk('s','المحلات الممسوحة','#3CC9B5',sd,rr=>sum(sd,rr),SA.length,'محل');
  if(e._h!==html){e._h=html;e.innerHTML=html}}
 
@@ -1297,9 +1316,10 @@ function cardsDraw(){const SA=shopsAll(),BD2=(window.JBD||[]);
 function zonesDraw(){const xl=$('exl');if(!xl)return;xl.classList.add('zl2');
  const r=range(),SA=shopsAll().filter(s=>inR(s.d,r)),cnt={};SA.forEach(s=>{cnt[s.z]=(cnt[s.z]||0)+1});
  const tot=SA.length,L=ZK.map(k=>[k,cnt[k]||0]).sort((a,b)=>b[1]-a[1]),mx=Math.max(1,...L.map(x=>x[1]));
- xl.innerHTML=`<h3>الزونات <small style="font-size:10.5px;color:var(--mut);font-weight:400">عدد المحلات الممسوحة · ${perLabel()}</small></h3>
+ xl.innerHTML=`<div id="gslot"></div><h3>الزونات <small style="font-size:10.5px;color:var(--mut);font-weight:400">عدد المحلات الممسوحة · ${perLabel()}</small></h3>
  <button type="button" class="zx ${Z?'':'on'}" data-zx=""><b>الكل</b><div class="tk"><i style="width:100%"></i></div><span>${fm(tot)}</span><em>100%</em></button>`+
- L.map(([k,v])=>`<button type="button" class="zx ${Z==k?'on':''}" data-zx="${k}" title="${esc(ZN(k))}"><b>${k}</b><div class="tk"><i style="width:${v/mx*100}%"></i></div><span>${fm(v)}</span><em dir="ltr">${pcs(v,tot)}</em></button>`).join('')}
+ L.map(([k,v])=>`<button type="button" class="zx ${Z==k?'on':''}" data-zx="${k}" title="${esc(ZN(k))}"><b>${k}</b><div class="tk"><i style="width:${v/mx*100}%"></i></div><span>${fm(v)}</span><em dir="ltr">${pcs(v,tot)}</em></button>`).join('');
+ if(window._gsz){const sl=$('gslot');if(sl)sl.appendChild(window._gsz)}}
 
 /* ---------- أعلى المباني حسب الحالة ---------- */
 function topDraw(){let e=$('tbw');if(!e){e=document.createElement('section');e.id='tbw';lm.appendChild(e)}
