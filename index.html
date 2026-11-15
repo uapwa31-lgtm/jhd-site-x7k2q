@@ -336,8 +336,8 @@ if(MF){const v=mfVal(b),M=MFS[MF],cnt=MFC(b);fc=v>0?`style="fill:${M.c}" fill-op
 return`<path class="${on?'on':''}" data-b="${b.id}" d="${G.P[b.id]}" ${fc} stroke="${sel?'#fff':'#0b1b24'}" stroke-width="${sel?t[2]/160:.3}"><title>${tt}</title></path>`};
 h+=BL.filter(b=>b.id!=B).map(pth).join('')+(B?pth(BL.find(b=>b.id==B)):'');
 if(!Z)h+=ZK.map(k=>{const L=BL.filter(b=>b.z==k);if(!L.length)return'';return`<text class="zt" x="${L.reduce((a,b)=>a+G.C[b.id][0],0)/L.length}" y="${L.reduce((a,b)=>a+G.C[b.id][1],0)/L.length+G.h/40}" font-size="${G.h/26}">${k}</text>`}).join('');
-else h+=zb().map(b=>`<text x="${G.C[b.id][0]}" y="${G.C[b.id][1]+t[2]/160}" font-size="${b.id==B?t[2]/18:t[2]/55}">${b.id}</text>`).join('');
-if(!Z)h+=BL.filter(b=>G.C[b.id]).map(b=>`<text class="bl" x="${G.C[b.id][0]}" y="${G.C[b.id][1]-1.2}" font-size="${G.w/120}" text-anchor="middle">${b.id}</text>`).join('');
+else h+=zb().map(b=>`<text class="nb" data-cy="${G.C[b.id][1]}" data-b="${b.id}"${b.id==B?' data-s="1"':''} x="${G.C[b.id][0]}" y="${G.C[b.id][1]+t[2]/160}" font-size="${b.id==B?t[2]/18:t[2]/55}">${b.id}</text>`).join('');
+if(!Z)h+=BL.filter(b=>G.C[b.id]).map(b=>`<text class="bl nb" data-cy="${G.C[b.id][1]}" data-b="${b.id}" x="${G.C[b.id][0]}" y="${G.C[b.id][1]-1.2}" font-size="${G.w/120}" text-anchor="middle">${b.id}</text>`).join('');
 $('map').innerHTML=h;setVB(t);tmApply()}
 function zoomAt(k,cx,cy){const m=$('map'),r=m.getBoundingClientRect(),px=vb[0]+(cx-r.left)/r.width*vb[2],py=vb[1]+(cy-r.top)/r.height*vb[3],w=Math.min(G.w*1.2,Math.max(8,vb[2]*k)),h=w/ASP;cancelAnimationFrame(raf);vb=[px-(px-vb[0])*w/vb[2],py-(py-vb[1])*h/vb[3],w,h];m.setAttribute('viewBox',vb.join(' '))}
 const mp=$('map');let dg=null;
@@ -926,7 +926,7 @@ body.ex3 .navb,body.ex3 .zs,body.ex3 .ks{display:none!important}body.ex3 .sp2 .g
 .exr .bb{height:7px;border-radius:4px;background:var(--line);overflow:hidden}.exr .bb i{display:block;height:100%;border-radius:4px}.exr b{font-variant-numeric:tabular-nums}
 .exc{display:flex;gap:2px;align-items:flex-end;flex:1;min-height:150px}.ec{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px;cursor:pointer;border-radius:8px;padding:2px}.ec:hover,.ec.on{background:rgba(120,160,165,.18)}.ec i{display:block;width:100%;border-radius:4px 4px 0 0;min-height:3px}.ec span{font-size:10px;color:var(--mut)}.ec b{font-size:10.5px}
 .exi{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:8px;border-radius:9px;cursor:pointer;font-size:13px}.exi:hover{background:rgba(120,160,165,.14)}.exi small{color:var(--mut);grid-column:1/-1;font-size:11.5px}.exi .bb{grid-column:1/-1;height:6px;border-radius:3px;background:var(--line);overflow:hidden}.exi .bb i{display:block;height:100%;background:var(--closed)}
-#map .bl{display:none;fill:#fff;stroke:#0b1b24;stroke-width:.6px;paint-order:stroke;font-weight:700;pointer-events:none}#map.zm .bl{display:block}
+#map .bl{display:none}#map.zm .bl{display:block}#map text.nb{fill:#fff;stroke:none;font-weight:800;pointer-events:none}#map .nbr{fill:#0b1b24;fill-opacity:.84;stroke:#fff;stroke-opacity:.6;pointer-events:none}#map .nbr.sel{fill:#0f766e;stroke-opacity:1}
 body.ex3 #exl{grid-area:zs;margin:0}
 @media(max-width:1100px){body.ex3 #exst{grid-template-columns:1fr}#exst .sp2{grid-template-columns:1fr}}body.ex3 .lay{grid-template-columns:minmax(0,1fr)!important}
 body.ex3 .lm{display:grid;grid-template-columns:260px minmax(0,1fr) 400px;gap:14px;align-items:start;grid-template-areas:"bc bc bc" "zs mp p1" "zs mp p2" "bd bd bd";grid-template-rows:auto 420px 440px auto;align-items:stretch}body.ex3 .lm>#exl,body.ex3 .lm>#exdw,body.ex3 .main>.c:first-child,body.ex3 .main>.c:last-child{height:100%;overflow:auto;max-height:none;min-height:0}body.ex3 .mw svg{max-height:none;height:auto}body.ex3 .mw svg{max-height:calc(100vh - 250px)}
@@ -984,7 +984,14 @@ document.querySelector('.navb')&&document.querySelector('.navb').insertAdjacentH
 const lay=document.querySelector('.lay');if(lay&&!$('exst')){lay.insertAdjacentHTML('beforebegin','<div id="exst"><div class="exv" id="exzv"></div><div class="exv" id="exiv"></div></div>');$('exst').insertBefore($('stp'),$('exst').firstChild)}
 const lm=document.querySelector('.lm');if(lm&&!$('exl'))lm.querySelector('.zs').insertAdjacentHTML('afterend','<div class="exl" id="exl"></div>');
 document.body.classList.add('dk');
-const mapEl=$('map');if(mapEl)new MutationObserver(()=>{const v=(mapEl.getAttribute('viewBox')||'').split(' ');mapEl.classList.toggle('zm',+v[2]<G.w*.4)}).observe(mapEl,{attributes:true,attributeFilter:['viewBox']});
+const mapEl=$('map');
+function fixLbl(){if(!mapEl)return;const r=mapEl.getBoundingClientRect();if(!r.width)return;const v=(mapEl.getAttribute('viewBox')||'').split(' ').map(Number),u=1/Math.min(r.width/v[2],r.height/v[3]);
+ mapEl.querySelectorAll('.nbr').forEach(e=>e.remove());
+ mapEl.querySelectorAll('text.nb').forEach(t=>{if(getComputedStyle(t).display=='none')return;const id=t.dataset.b,sel=t.dataset.s=='1',bb=G.B[id],fs=(sel?15:11)*u;
+  if(!sel&&bb&&(bb[2]-bb[0])/u<fs*t.textContent.length*.62+4){t.style.visibility='hidden';return}t.style.visibility='';
+  t.style.fontSize=fs+'px';t.setAttribute('y',+t.dataset.cy+fs*.35);const q=t.getBBox(),pd=fs*.28;
+  const rc=document.createElementNS('http://www.w3.org/2000/svg','rect');rc.setAttribute('class','nbr'+(sel?' sel':''));rc.setAttribute('x',q.x-pd);rc.setAttribute('y',q.y-pd*.4);rc.setAttribute('width',q.width+pd*2);rc.setAttribute('height',q.height+pd*.8);rc.setAttribute('rx',fs*.3);rc.setAttribute('stroke-width',u*(sel?1.4:.8));t.before(rc)})}
+if(mapEl){new MutationObserver(()=>{const v=(mapEl.getAttribute('viewBox')||'').split(' ');mapEl.classList.toggle('zm',+v[2]<G.w*.4);fixLbl()}).observe(mapEl,{attributes:true,attributeFilter:['viewBox']});window.addEventListener('resize',fixLbl)}
 document.addEventListener('click',e=>{const t=e.target;let b;if(b=t.closest('.exz[data-ez]')){const k=b.dataset.ez;if(k=='all')selZ(null);else if(Z!=k)selZ(k);else selZ(null);return}
  if(b=t.closest('[data-ezv]')){const k=b.dataset.ezv;if(Z!=k)selZ(k);else selZ(null);return}
  if(b=t.closest('[data-einsp]')){location.hash='#/inspectors/'+encodeURIComponent(b.dataset.einsp)}});
@@ -1013,6 +1020,118 @@ if(!FB){const _own=new Set(SH.map(r=>r.b));Object.keys(D.sh||{}).forEach(k=>_own
   if(d[1]){d[1].querySelector('b').textContent=f(BL.length+UNM.length);d[1].querySelector('span').textContent='مبنى ممسوح'}
   const x=document.createElement('div');x.style.setProperty('--kc','#4FB8A5');x.innerHTML='<b>'+f(NSB.length)+'</b><span>مباني بدون محلات</span>';ks.appendChild(x)};
  ksDraw()}
+})();
+
+/* ===== 3D واقعي: Cesium + مجسّمات Google (يُحمَّل عند الضغط فقط) =====
+   - زر "3D" في أزرار الخريطة. الخريطة العادية تبقى الأساس.
+   - مشهد Google يُنشأ مرة واحدة فقط (لا يُعاد مع تحديث الداشبورد)؛ يتحدّث فقط تلوين البصمات.
+   - الـ Token: ملف cesium-token.js (window.CESIUM_TOKEN) أو يُلصق مرة واحدة ويُحفظ في المتصفح.
+   - شروط Google: يجب أن تبقى سطرة الإسناد (Data attribution) ظاهرة؛ لا تُخفها. */
+(function(){
+const CDN='https://cesium.com/downloads/cesiumjs/releases/1.124/Build/Cesium/';
+const GR3={a:[30908.922304,-38.936492,-1210207.73465],b:[-36.441658,-33024.982697,711240.062653]};
+const inv3=(x,y)=>{const dx=x-GR3.a[2],dy=y-GR3.b[2],det=GR3.a[0]*GR3.b[1]-GR3.a[1]*GR3.b[0];return[(GR3.b[1]*dx-GR3.a[1]*dy)/det,(-GR3.b[0]*dx+GR3.a[0]*dy)/det]};
+const rings3=d=>{const o=[];(String(d||'').match(/M[^M]*/g)||[]).forEach(s=>{const n=(s.match(/-?\d*\.?\d+(?:e-?\d+)?/g)||[]).map(Number);const r=[];for(let i=0;i+1<n.length;i+=2)r.push([n[i],n[i+1]]);if(r.length>2){const a=r[0],b=r[r.length-1];if(a[0]===b[0]&&a[1]===b[1])r.pop()}if(r.length>=3)o.push(r)});return o};
+const mw=document.querySelector('.mw'),mc=mw&&mw.querySelector('.mc');
+if(!mw||!mc)return;
+const css=document.createElement('style');css.textContent=`
+#cz3{position:absolute;inset:0;z-index:3;display:none;overflow:hidden;border-radius:inherit;background:#0b1b24}
+.mw.v3d #cz3{display:block}.mw.v3d .mc{z-index:6}
+#cz3 .cesium-viewer,#cz3 .cesium-viewer-cesiumWidgetContainer,#cz3 .cesium-widget,#cz3 canvas{width:100%!important;height:100%!important}
+#cz3 .cesium-viewer-bottom{z-index:5}
+#cz3 .m3{position:absolute;inset:0;display:grid;place-items:center;padding:16px;z-index:4;pointer-events:none}
+#cz3 .m3>div{pointer-events:auto;max-width:360px;background:rgba(11,27,36,.94);border:1px solid #2a4350;border-radius:14px;padding:14px 16px;font-size:13px;line-height:1.9;color:#cfe0e8}
+#cz3 .m3 b{display:block;font-size:15px;margin-bottom:4px}#cz3 .m3 input{width:100%;box-sizing:border-box;margin:8px 0;padding:9px 11px;border-radius:9px;border:1px solid #2f5062;background:#142a35;color:#fff;font:12px monospace;direction:ltr}
+#cz3 .m3 button{width:auto;height:auto;padding:7px 16px;border-radius:999px;font-size:13px}
+#b3d{font-size:12px;font-weight:700}.mw.v3d #b3d{background:var(--accent,#1a8fa8);color:#fff}`;
+document.head.appendChild(css);
+const box=document.createElement('div');box.id='cz3';mw.insertBefore(box,mw.firstChild);
+const btn=document.createElement('button');btn.id='b3d';btn.type='button';btn.textContent='3D';btn.title='عرض واقعي ثلاثي الأبعاد (Google)';btn.setAttribute('aria-pressed','false');mc.appendChild(btn);
+
+let v=null,starting=false,on=false,ents=new Map(),bmap=new Map(),pos=new Map(),lastZ=undefined,lastB=undefined,hasTok=false;
+const say=(h)=>{let m=box.querySelector('.m3');if(!h){if(m)m.remove();return}if(!m){m=document.createElement('div');m.className='m3';box.appendChild(m)}m.innerHTML='<div>'+h+'</div>';return m};
+const loadScript=(src)=>new Promise((ok,bad)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>bad(new Error('load '+src));document.head.appendChild(s)});
+const getTok=()=>{try{return window.CESIUM_TOKEN||localStorage.getItem('cesiumTok')||''}catch(e){return window.CESIUM_TOKEN||''}};
+function askTok(){return new Promise(res=>{const m=say('<b>أدخل Token لـ Cesium ion</b>الصقه مرة واحدة، ويُحفظ في هذا المتصفح فقط.<input id="tk3" type="password" placeholder="eyJ..." autocomplete="off"><button type="button" id="tg3">تشغيل</button>');const go=()=>{const t=(m.querySelector('#tk3').value||'').trim();if(t){try{localStorage.setItem('cesiumTok',t)}catch(e){}res(t)}};m.querySelector('#tg3').onclick=go;m.querySelector('#tk3').onkeydown=e=>{if(e.key==='Enter')go()}})}
+
+const zoneOn=b=>{const rg=typeof RG!=='undefined'?RG:{};return(!R||rg[b.id]==R)&&(!Z||b.z==Z)&&(!NZ||b.nz==NZ)};
+const stOf=b=>b.id==B?'s':zoneOn(b)?'on':'off';
+const ALPHA={s:.9,on:.5,off:.1};
+function geomOf(id){ // [rings(lon/lat)] أو null
+  let rs=null;
+  if(typeof G!=='undefined'&&G.P&&G.P[id])rs=rings3(G.P[id]);
+  else if(D&&D.NB&&D.NB[id]){const[X,Y]=D.NB[id],h=1.3;rs=[[[X-h,Y-h],[X+h,Y-h],[X+h,Y+h],[X-h,Y+h]]]}
+  if(!rs||!rs.length)return null;
+  return rs.map(r=>r.map(p=>inv3(p[0],p[1])));
+}
+function ensureEnts(){
+  const C=Cesium;v.entities.suspendEvents();
+  BL.forEach(b=>{if(ents.has(b.id))return;const gs=geomOf(b.id);if(!gs)return;
+    let sx=0,sy=0,k=0;gs[0].forEach(p=>{sx+=p[0];sy+=p[1];k++});const cx=sx/k,cy=sy/k;pos.set(b.id,[cx,cy]);
+    const st=stOf(b),col=C.Color.fromCssColorString(ZC[b.z]||'#3CC9B5');
+    const flat=gs[0].flat();
+    const e=v.entities.add({position:C.Cartesian3.fromDegrees(cx,cy,0),
+      polygon:{hierarchy:C.Cartesian3.fromDegreesArray(flat),material:col.withAlpha(ALPHA[st]),classificationType:C.ClassificationType.CESIUM_3D_TILE},
+      label:{text:String(b.id),font:'bold 14px Tahoma, Arial',fillColor:C.Color.WHITE,outlineColor:C.Color.BLACK,outlineWidth:3,style:C.LabelStyle.FILL_AND_OUTLINE,
+        heightReference:C.HeightReference.CLAMP_TO_3D_TILE,verticalOrigin:C.VerticalOrigin.BOTTOM,disableDepthTestDistance:Number.POSITIVE_INFINITY,
+        distanceDisplayCondition:new C.DistanceDisplayCondition(0,650),scale:1}});
+    bmap.set(e.id,b.id);ents.set(b.id,{e,st,col});
+    for(let i=1;i<gs.length;i++){const x=v.entities.add({polygon:{hierarchy:C.Cartesian3.fromDegreesArray(gs[i].flat()),material:col.withAlpha(ALPHA[st]),classificationType:C.ClassificationType.CESIUM_3D_TILE}});bmap.set(x.id,b.id);(ents.get(b.id).x=ents.get(b.id).x||[]).push(x)}
+  });
+  v.entities.resumeEvents();
+}
+const mpl=(lon,lat)=>[lon*102000,lat*110800];
+function flyTo(ids,tight){
+  const C=Cesium,P=ids.map(i=>pos.get(i)).filter(Boolean);if(!P.length)return;
+  let cx=0,cy=0;P.forEach(p=>{cx+=p[0];cy+=p[1]});cx/=P.length;cy/=P.length;
+  let r=0;P.forEach(p=>{const a=mpl(p[0]-cx,p[1]-cy);r=Math.max(r,Math.hypot(a[0],a[1]))});
+  r=Math.max(tight?45:90,r*1.05);
+  v.camera.flyToBoundingSphere(new C.BoundingSphere(C.Cartesian3.fromDegrees(cx,cy,12),r),{offset:new C.HeadingPitchRange(0,C.Math.toRadians(-40),r*(tight?3.2:2.6)),duration:1.4});
+}
+function sync(){
+  if(!v||!ents.size&&!BL.length)return;
+  ensureEnts();
+  ents.forEach((o,id)=>{const b=BL.find(x=>x.id==id);if(!b)return;const st=stOf(b);if(st===o.st)return;o.st=st;
+    const m=o.col.withAlpha(ALPHA[st]);o.e.polygon.material=m;(o.x||[]).forEach(x=>x.polygon.material=m);o.e.label.scale=st==='s'?1.35:1});
+  if(on&&(Z!==lastZ||B!==lastB)){lastZ=Z;lastB=B;
+    if(B&&pos.has(B))flyTo([B],true);
+    else if(Z)flyTo(BL.filter(b=>b.z==Z).map(b=>b.id),false);
+    else flyTo(BL.map(b=>b.id),false)}
+}
+async function start(){
+  if(starting)return;starting=true;
+  try{
+    say('جارٍ تحميل مشهد Google...');
+    if(!window.Cesium){const l=document.createElement('link');l.rel='stylesheet';l.href=CDN+'Widgets/widgets.css';document.head.appendChild(l);await loadScript(CDN+'Cesium.js')}
+    if(!getTok()){try{await loadScript('cesium-token.js?'+Date.now())}catch(e){}}
+    let tok=getTok();if(!tok)tok=await askTok();
+    const C=Cesium;C.Ion.defaultAccessToken=tok;say('جارٍ تحميل مجسّمات Google...');
+    v=new C.Viewer(box,{globe:false,baseLayerPicker:false,geocoder:false,homeButton:false,sceneModePicker:false,navigationHelpButton:false,animation:false,timeline:false,fullscreenButton:false,infoBox:false,selectionIndicator:false,skyAtmosphere:new C.SkyAtmosphere()});
+    v.scene.globe=undefined;
+    const ts=C.createGooglePhotorealistic3DTileset?await C.createGooglePhotorealistic3DTileset():await C.Cesium3DTileset.fromIonAssetId(2275207);
+    v.scene.primitives.add(ts);
+    v.screenSpaceEventHandler.setInputAction(c=>{const p=v.scene.pick(c.position);if(C.defined(p)&&p.id&&bmap.has(p.id.id))selB(String(bmap.get(p.id.id)))},C.ScreenSpaceEventType.LEFT_CLICK);
+    new ResizeObserver(()=>{try{v.resize()}catch(e){}}).observe(box);
+    say(null);lastZ=lastB=undefined;sync();
+  }catch(err){
+    console.error('3D',err);let t=String(err&&err.message||err);
+    const bad=/401|unauthor|token|invalid/i.test(t);
+    if(bad)try{localStorage.removeItem('cesiumTok')}catch(e){}
+    say('<b>تعذّر فتح العرض الواقعي</b>'+(bad?'الـ Token غير صحيح أو لا يشمل Google Photorealistic 3D Tiles. أضفه من Asset Depot في حسابك ثم جرّب مجدداً.':/load /.test(t)?'تعذّر الوصول إلى خوادم Cesium. تحقق من الإنترنت أو جرّب شبكة أخرى.':'حدث خطأ غير متوقع. الخريطة العادية تعمل كالمعتاد.')+'<br><button type="button" id="rt3">رجوع للخريطة</button>').querySelector('#rt3').onclick=()=>toggle(false);
+    v&&(()=>{try{v.destroy()}catch(e){}})();v=null;ents.clear();bmap.clear();pos.clear();
+  }finally{starting=false}
+}
+function toggle(f){
+  on=f===undefined?!on:f;mw.classList.toggle('v3d',on);btn.setAttribute('aria-pressed',on);
+  if(v)v.useDefaultRenderLoop=on;
+  if(on){if(!v&&!starting)start();else if(v){lastZ=lastB=undefined;sync();try{v.resize()}catch(e){}}}
+}
+btn.addEventListener('click',()=>toggle());
+mc.addEventListener('click',e=>{ // أزرار التكبير تعمل على مشهد 3D عندما يكون مفتوحاً
+  const b=e.target.closest('[data-mz]');if(!b||!on||!v)return;e.stopImmediatePropagation();e.preventDefault();
+  const k=b.dataset.mz;if(k==='in')v.camera.zoomIn(v.camera.positionCartographic.height*.3);else if(k==='out')v.camera.zoomOut(v.camera.positionCartographic.height*.4);else{lastZ=lastB=undefined;sync()}
+},true);
+const _r3=render;render=function(){_r3();try{sync()}catch(e){console.error(e)}};
 })();
 
 </script></body></html>
