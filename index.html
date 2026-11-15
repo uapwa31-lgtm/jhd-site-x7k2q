@@ -1160,6 +1160,19 @@ const css=document.createElement('style');css.textContent=`
 body.ex3 #exl.zl2{overflow:visible!important}.gz #gr{width:min(460px,92vw)!important;inset-inline-start:auto;inset-inline-end:auto;left:auto;right:0}
 @media(max-width:700px){.hero .hh{grid-template-columns:1fr;justify-items:center}.hero .hh .hl{align-items:center}.hero .hh .hnav{flex-direction:row;flex-wrap:wrap}}
 
+.hvt{position:fixed;z-index:200;pointer-events:none;background:#0a161c;border:1px solid #2b5666;border-radius:10px;padding:7px 11px;font-size:12.5px;color:#e9f1f4;box-shadow:0 8px 22px #000a;white-space:nowrap;transform:translate(-50%,-115%)}
+.hvt b{display:block;font-size:17px;font-variant-numeric:tabular-nums}.hvt span{color:#9fb7c0;font-size:11.5px}
+.hvl{position:fixed;z-index:199;pointer-events:none;width:0;border-inline-start:1px dashed #9fb7c0}
+svg.hv{cursor:crosshair}
+
+.pgh .bk{display:none!important}
+#zs{display:grid}#zs .zc:nth-last-child(-n+2){order:-1}
+.hero{position:relative;isolation:isolate;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iMTYwIiB2aWV3Qm94PSIwIDAgNjAwIDE2MCI+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjEuNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAwKSI+PGVsbGlwc2UgY3g9IjUwIiBjeT0iNDgiIHJ4PSI3IiByeT0iMjAiIHRyYW5zZm9ybT0icm90YXRlKDAgNTAgODApIi8+PGVsbGlwc2UgY3g9IjUwIiBjeT0iNDgiIHJ4PSI3IiByeT0iMjAiIHRyYW5zZm9ybT0icm90YXRlKDQ1IDUwIDgwKSIvPjxlbGxpcHNlIGN4PSI1MCIgY3k9IjQ4IiByeD0iNyIgcnk9IjIwIiB0cmFuc2Zvcm09InJvdGF0ZSg5MCA1MCA4MCkiLz48ZWxsaXBzZSBjeD0iNTAiIGN5PSI0OCIgcng9IjciIHJ5PSIyMCIgdHJhbnNmb3JtPSJyb3RhdGUoMTM1IDUwIDgwKSIvPjxlbGxpcHNlIGN4PSI1MCIgY3k9IjQ4IiByeD0iNyIgcnk9IjIwIiB0cmFuc2Zvcm09InJvdGF0ZSgxODAgNTAgODApIi8+PGVsbGlwc2UgY3g9IjUwIiBjeT0iNDgiIHJ4PSI3IiByeT0iMjAiIHRyYW5zZm9ybT0icm90YXRlKDIyNSA1MCA4MCkiLz48ZWxsaXBzZSBjeD0iNTAiIGN5PSI0OCIgcng9IjciIHJ5PSIyMCIgdHJhbnNmb3JtPSJyb3RhdGUoMjcwIDUwIDgwKSIvPjxlbGxpcHNlIGN4PSI1MCIgY3k9IjQ4IiByeD0iNyIgcnk9IjIwIiB0cmFuc2Zvcm09InJvdGF0ZSgzMTUgNTAgODApIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSI4MCIgcj0iOCIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iODAiIHI9IjM4Ii8+PGNpcmNsZSBjeD0iNTAiIGN5PSI4MCIgcj0iNDYiLz48cmVjdCB4PSIwLjUiIHk9IjAuNSIgd2lkdGg9Ijk5IiBoZWlnaHQ9IjE1OSIvPjwvZz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDAgMCkiPjxwYXRoIGQ9Ik01MCAwTDkwIDIwTDUwIDQwTDEwIDIwWiIvPjxwYXRoIGQ9Ik01MCA4TDc2IDIwTDUwIDMyTDI0IDIwWiIvPjxwYXRoIGQ9Ik01MCA0MEw5MCA2MEw1MCA4MEwxMCA2MFoiLz48cGF0aCBkPSJNNTAgNDhMNzYgNjBMNTAgNzJMMjQgNjBaIi8+PHBhdGggZD0iTTUwIDgwTDkwIDEwMEw1MCAxMjBMMTAgMTAwWiIvPjxwYXRoIGQ9Ik01MCA4OEw3NiAxMDBMNTAgMTEyTDI0IDEwMFoiLz48cGF0aCBkPSJNNTAgMTIwTDkwIDE0MEw1MCAxNjBMMTAgMTQwWiIvPjxwYXRoIGQ9Ik01MCAxMjhMNzYgMTQwTDUwIDE1MkwyNCAxNDBaIi8+PHJlY3QgeD0iMC41IiB5PSIwLjUiIHdpZHRoPSI5OSIgaGVpZ2h0PSIxNTkiLz48L2c+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjAwIDApIj48cGF0aCBkPSJNMTAgMTBMNTAgNDBMOTAgMTBNMTAgNDBMNTAgNzBMOTAgNDBNMTAgNzBMNTAgMTAwTDkwIDcwTTEwIDEwMEw1MCAxMzBMOTAgMTAwTTEwIDEzMEw1MCAxNjAiLz48cGF0aCBkPSJNNTAgNTVMNzAgODBMNTAgMTA1TDMwIDgwWiIvPjxyZWN0IHg9IjAuNSIgeT0iMC41IiB3aWR0aD0iOTkiIGhlaWdodD0iMTU5Ii8+PC9nPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDMwMCAwKSI+PHBvbHlnb24gcG9pbnRzPSI1MC4wLDQwLjAgNTguNCw1OS43IDc4LjMsNTEuNyA3MC4zLDcxLjYgOTAuMCw4MC4wIDcwLjMsODguNCA3OC4zLDEwOC4zIDU4LjQsMTAwLjMgNTAuMCwxMjAuMCA0MS42LDEwMC4zIDIxLjcsMTA4LjMgMjkuNyw4OC40IDEwLjAsODAuMCAyOS43LDcxLjYgMjEuNyw1MS43IDQxLjYsNTkuNyIvPjxwb2x5Z29uIHBvaW50cz0iNTAuMCw1OC4wIDU0LjYsNjguOSA2NS42LDY0LjQgNjEuMSw3NS40IDcyLjAsODAuMCA2MS4xLDg0LjYgNjUuNiw5NS42IDU0LjYsOTEuMSA1MC4wLDEwMi4wIDQ1LjQsOTEuMSAzNC40LDk1LjYgMzguOSw4NC42IDI4LjAsODAuMCAzOC45LDc1LjQgMzQuNCw2NC40IDQ1LjQsNjguOSIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iODAiIHI9IjQ2Ii8+PHBhdGggZD0iTTQgODBIOTZNNTAgMzRWMTI2Ii8+PHJlY3QgeD0iMC41IiB5PSIwLjUiIHdpZHRoPSI5OSIgaGVpZ2h0PSIxNTkiLz48L2c+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDAwIDApIj48Y2lyY2xlIGN4PSIxMCIgY3k9IjUwIiByPSI0MCIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iNTAiIHI9IjQwIi8+PGNpcmNsZSBjeD0iMTAiIGN5PSIxMTAiIHI9IjQwIi8+PGNpcmNsZSBjeD0iOTAiIGN5PSIxMTAiIHI9IjQwIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSI4MCIgcj0iMzAiLz48cGF0aCBkPSJNNTAgMTBWMTUwIi8+PHJlY3QgeD0iMC41IiB5PSIwLjUiIHdpZHRoPSI5OSIgaGVpZ2h0PSIxNTkiLz48L2c+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTAwIDApIj48cGF0aCBkPSJNNTAgNlYxNTQiLz48cGF0aCBkPSJNNTAgMzBMMTYgMTBNNTAgMzBMODQgMTAiLz48cGF0aCBkPSJNNTAgNTJMMTYgMzJNNTAgNTJMODQgMzIiLz48cGF0aCBkPSJNNTAgNzRMMTYgNTRNNTAgNzRMODQgNTQiLz48cGF0aCBkPSJNNTAgOTZMMTYgNzZNNTAgOTZMODQgNzYiLz48cGF0aCBkPSJNNTAgMTE4TDE2IDk4TTUwIDExOEw4NCA5OCIvPjxwYXRoIGQ9Ik01MCAxNDBMMTYgMTIwTTUwIDE0MEw4NCAxMjAiLz48cmVjdCB4PSIwLjUiIHk9IjAuNSIgd2lkdGg9Ijk5IiBoZWlnaHQ9IjE1OSIvPjwvZz48L2c+PC9zdmc+) repeat center top/auto 110px;opacity:.22}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#0b1a20 0%,#0b1a2000 22%,#0b1a2000 78%,#0b1a20 100%);opacity:0}
+.hero .hh .hl,.hero .hh h1{text-shadow:0 2px 10px #000}
+.hero .hh .hnav .hb:not(.pri){background:#0b1a20cc}
+
 .hero .ttl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.hero .ttl h1{margin:0}
 .hnav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;position:relative}
 .hnav .hb{font:inherit;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;border:1px solid #ffffff3d;background:#ffffff14;color:#fff;cursor:pointer;white-space:nowrap}
@@ -1234,7 +1247,7 @@ const h1=hero.querySelector('h1');
 if(h1&&!hero.querySelector('.hnav')){
  const w=document.createElement('div');w.className='ttl';h1.parentNode.insertBefore(w,h1);w.appendChild(h1);
  const nav=document.createElement('div');nav.className='hnav';
- nav.innerHTML='<button class="hb pri" type="button" data-hn="home">🏠 الرئيسية</button><button class="hb" type="button" data-hn="menu" aria-haspopup="true">☰ الصفحات ▾</button><button class="hb" type="button" data-hn="reset" title="مسح كل الفلاتر والتحديدات">↺ تصفير الكل</button><div class="hm" id="hmenu"><a href="#/inspectors">📊 إحصائيات المفتشين</a><a href="#/dash">🗂️ الداشبورد التفصيلي</a></div>';
+ nav.innerHTML='<button class="hb pri" type="button" data-hn="home">🏠 الرئيسية</button><a class="hb" href="#/dash" style="text-decoration:none">🗂️ الداشبورد التفصيلي</a><button class="hb" type="button" data-hn="reset" title="مسح كل الفلاتر والتحديدات">↺ تصفير الكل</button>';
  w.appendChild(nav)}
 if(!hero.querySelector('.hh')){
  const hh=document.createElement('div');hh.className='hh';
@@ -1268,7 +1281,7 @@ function nxDraw(){
  const ser=days.map(d=>dm[d]||0),mx=Math.max(1,...ser),sum=ser.reduce((a,b)=>a+b,0),best=ser.indexOf(Math.max(...ser));
  const W=340,H=96,pts=ser.map((v,i)=>[5+i*(W-10)/13,H-8-(v/mx)*(H-24)]),pd='M'+pts.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join('L');
  const sl=d=>+d.slice(8)+'/'+ +d.slice(5,7);
- const chart=`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="إنتاج آخر 14 يوماً"><path d="${pd}L${W-5} ${H}L5 ${H}Z" fill="#3cc9b5" opacity=".16"/><path d="${pd}" fill="none" stroke="#3cc9b5" stroke-width="2.5" vector-effect="non-scaling-stroke"/>${pts.map((p,i)=>`<rect x="${p[0]-W/28}" y="0" width="${W/14}" height="${H}" fill="transparent"><title>${sl(days[i])}: ${ser[i]} محل</title></rect>`).join('')}</svg>`;
+ const chart=`<svg class="hv" data-days="${days.join(',')}" data-vals="${ser.join(',')}" data-u="محل" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="إنتاج آخر 14 يوماً"><path d="${pd}L${W-5} ${H}L5 ${H}Z" fill="#3cc9b5" opacity=".16"/><path d="${pd}" fill="none" stroke="#3cc9b5" stroke-width="2.5" vector-effect="non-scaling-stroke"/>${pts.map((p,i)=>`<rect x="${p[0]-W/28}" y="0" width="${W/14}" height="${H}" fill="transparent"></rect>`).join('')}</svg>`;
  const TB=getGoalB(),totB=BL.length+Math.max(0,un);
  const dl=GD?Math.round((new Date(GD+'T12:00:00')-new Date(offD(0)+'T12:00:00'))/864e5):0;
  const goalRow=(t,done,T0)=>{const rem=Math.max(0,T0-done),pg=T0?Math.min(100,done/T0*100):0;let need='';if(GD&&rem>0){need=dl>0?` · المطلوب ${fm(Math.ceil(rem/dl))} / يوم`:' · انتهى الموعد'}
@@ -1298,14 +1311,14 @@ function cardsDraw(){const SA=shopsAll(),BD2=(window.JBD||[]);
  const first=Object.keys(sd).concat(Object.keys(bd)).sort()[0]||t;
  let lo=r?(r[0].startsWith('0000')?first:r[0]):first,hi=r?(r[1].startsWith('9999')?t:(r[1]>t?t:r[1])):t;if(dayDiff(hi,lo)>119)lo=addD(hi,-119);if(lo>hi)lo=hi;
  const days=[];for(let d=lo;d<=hi;d=addD(d,1))days.push(d);
- const spark=m=>{const v=days.map(d=>m[d]||0),mx=Math.max(1,...v),W=170,H=56,n=Math.max(1,v.length-1),P=v.map((x,i)=>[4+i*(W-8)/n,H-6-(x/mx)*(H-12)]),pd='M'+P.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join('L');
-  return`<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img"><path d="${pd}L${W-4} ${H}L4 ${H}Z" fill="var(--k)" opacity=".16"/><path d="${pd}" fill="none" stroke="var(--k)" stroke-width="2.2" vector-effect="non-scaling-stroke"/>${P.map((p,i)=>`<rect x="${p[0]-W/(2*Math.max(1,v.length))}" y="0" width="${W/Math.max(1,v.length)}" height="${H}" fill="transparent"><title>${days[i]}: ${v[i]}</title></rect>`).join('')}</svg>`};
+ const spark=(m,u)=>{const v=days.map(d=>m[d]||0),mx=Math.max(1,...v),W=170,H=56,n=Math.max(1,v.length-1),P=v.map((x,i)=>[4+i*(W-8)/n,H-6-(x/mx)*(H-12)]),pd='M'+P.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join('L');
+  return`<svg class="hv" data-days="${days.join(',')}" data-vals="${v.join(',')}" data-u="${u||''}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img"><path d="${pd}L${W-4} ${H}L4 ${H}Z" fill="var(--k)" opacity=".16"/><path d="${pd}" fill="none" stroke="var(--k)" stroke-width="2.2" vector-effect="non-scaling-stroke"/>${P.map((p,i)=>`<rect x="${p[0]-W/(2*Math.max(1,v.length))}" y="0" width="${W/Math.max(1,v.length)}" height="${H}" fill="transparent"></rect>`).join('')}</svg>`};
  const chg=(c,p)=>p==null?'':p==0?(c?`<span class="ch" style="color:var(--open)">جديد</span>`:''):`<span class="ch" style="color:${c>=p?'var(--open)':'var(--fled)'}">${c>=p?'▲':'▼'} ${Math.abs(Math.round((c-p)/p*100))}%</span>`;
  const row=(l,c,p)=>`<tr><td>${l}</td><td><b>${fm(c)}</b></td><td style="color:var(--mut)">${fm(p)}</td><td>${chg(c,p)||'—'}</td></tr>`;
  const mk=(k,title,col,m,fn,tot,unit)=>{const cur=fn(r),prv=pr?fn(pr):null;
   const wk=[addD(t,-6),t],pw=[addD(t,-13),addD(t,-7)],mo=[addD(t,-29),t],pm=[addD(t,-59),addD(t,-30)];
   return`<div class="pc" style="--k:${col}"><h4><i></i>${title}<span>الإجمالي ${fm(tot)}</span></h4>
-  <div class="pr"><div class="pq"><b>${fm(cur)}</b><span>${unit} · ${perLabel()}</span><div class="pv">${prv==null?'لا توجد فترة سابقة للمقارنة':'الفترة السابقة '+fm(prv)+chg(cur,prv)}</div></div>${spark(m)}</div>
+  <div class="pr"><div class="pq"><b>${fm(cur)}</b><span>${unit} · ${perLabel()}</span><div class="pv">${prv==null?'لا توجد فترة سابقة للمقارنة':'الفترة السابقة '+fm(prv)+chg(cur,prv)}</div></div>${spark(m,unit)}</div>
   <table><tr><th></th><th>الحالي</th><th>السابق</th><th>التغيّر</th></tr>${row('اليوم / أمس',fn([t,t]),fn([y,y]))}${row('آخر 7 أيام',fn(wk),fn(pw))}${row('آخر 30 يوماً',fn(mo),fn(pm))}</table></div>`};
  const un=Math.max(0,(window.NSB||[]).length-BL.filter(b=>!b.n).length),bTot=BL.length+un;
  let e=$('nx2');if(!e){e=document.createElement('section');e.id='nx2';const n=$('nx');n.parentNode.insertBefore(e,n)}
@@ -1374,9 +1387,29 @@ document.addEventListener('change',ev=>{const t=ev.target;if(t.id=='pF'||t.id=='
 document.addEventListener('keydown',ev=>{if(ev.key=='Escape'){const hm=$('hmenu');if(hm)hm.classList.remove('on')}});
 
 /* ---------- الرسم ---------- */
-function all(){try{nxDraw();cardsDraw();zonesDraw();topDraw();tilesDraw();cardDraw()}catch(e){console.error('ui2',e)}}
+
+function lastDay(){const S=(window.JSH||[]),B=(window.JBD||[]);let m='';S.forEach(x=>{if(x.d&&x.d>m)m=x.d});B.forEach(x=>{if(x.d&&x.d>m)m=x.d});return m}
+function tdyDraw(){const e=$('tdy');if(!e)return;const m=lastDay();if(!m)return;let t;try{t=new Date(m+'T12:00:00').toLocaleDateString('ar-u-ca-gregory-nu-latn',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}catch(x){t=m}e.textContent='آخر مسح: '+t}
+
+function all(){try{tdyDraw();nxDraw();cardsDraw();zonesDraw();topDraw();tilesDraw();cardDraw()}catch(e){console.error('ui2',e)}}
 const _r2=render;render=function(){_r2();all()};
 window.addEventListener('hashchange',()=>{setTimeout(all,0)});
+/* ---------- تلميح الرسوم (التاريخ عند المرور) ---------- */
+(function(){let tt=null,ln=null;
+ const fd=d=>{try{return new Date(d+'T12:00:00').toLocaleDateString('ar-u-ca-gregory-nu-latn',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}catch(e){return d}};
+ const hide=()=>{if(tt)tt.hidden=true;if(ln)ln.hidden=true};
+ document.addEventListener('mousemove',ev=>{const sv=ev.target.closest&&ev.target.closest('svg.hv');if(!sv){hide();return}
+  const D=(sv.dataset.days||'').split(','),V=(sv.dataset.vals||'').split(',');if(!D.length||!D[0]){hide();return}
+  const r=sv.getBoundingClientRect(),f=Math.min(1,Math.max(0,(ev.clientX-r.left)/r.width));
+  const n=D.length,i=n<2?0:Math.round(f*(n-1));
+  if(!tt){tt=document.createElement('div');tt.className='hvt';document.body.appendChild(tt);ln=document.createElement('div');ln.className='hvl';document.body.appendChild(ln)}
+  tt.hidden=false;ln.hidden=false;
+  const x=r.left+(n<2?0.5:i/(n-1))*r.width;
+  tt.innerHTML='<span>'+fd(D[i])+'</span><b>'+(+V[i]).toLocaleString('en-US')+' '+(sv.dataset.u||'')+'</b>';
+  tt.style.left=Math.min(innerWidth-90,Math.max(90,x))+'px';tt.style.top=(r.top+r.height*0.2)+'px';
+  ln.style.left=x+'px';ln.style.top=r.top+'px';ln.style.height=r.height+'px'});
+ document.addEventListener('mouseleave',hide);window.addEventListener('scroll',hide,true)})();
+
 all();
 })();
 
