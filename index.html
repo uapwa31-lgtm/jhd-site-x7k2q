@@ -1050,7 +1050,7 @@ document.head.appendChild(css);
 const box=document.createElement('div');box.id='cz3';mw.insertBefore(box,mw.firstChild);
 const btn=document.createElement('button');btn.id='b3d';btn.type='button';btn.textContent='3D';btn.title='عرض واقعي ثلاثي الأبعاد (Google)';btn.setAttribute('aria-pressed','false');mc.appendChild(btn);
 
-let v=null,starting=false,on=false,built=false,dirty=false,firstFly=true,bById=new Map(),bLen=-1,syncT=0,ents=new Map(),bmap=new Map(),pos=new Map(),lastZ=undefined,lastB=undefined,hasTok=false;
+let GH=40,bnd=null,v=null,starting=false,on=false,built=false,dirty=false,firstFly=true,bById=new Map(),bLen=-1,syncT=0,ents=new Map(),bmap=new Map(),pos=new Map(),lastZ=undefined,lastB=undefined,hasTok=false;
 const say=(h)=>{let m=box.querySelector('.m3');if(!h){if(m)m.remove();return}if(!m){m=document.createElement('div');m.className='m3';box.appendChild(m)}m.innerHTML='<div>'+h+'</div>';return m};
 const loadScript=(src)=>new Promise((ok,bad)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>bad(new Error('load '+src));document.head.appendChild(s)});
 const getTok=()=>{try{return window.CESIUM_TOKEN||localStorage.getItem('cesiumTok')||''}catch(e){return window.CESIUM_TOKEN||''}};
@@ -1073,11 +1073,11 @@ function ensureEnts(){
     let sx=0,sy=0,k=0;gs[0].forEach(p=>{sx+=p[0];sy+=p[1];k++});const cx=sx/k,cy=sy/k;pos.set(b.id,[cx,cy]);
     const st=stOf(b),col=C.Color.fromCssColorString(ZC[b.z]||'#3CC9B5');
     const flat=gs[0].flat();
-    const e=v.entities.add({position:C.Cartesian3.fromDegrees(cx,cy,0),
+    const e=v.entities.add({position:C.Cartesian3.fromDegrees(cx,cy,GH),
       polygon:{hierarchy:C.Cartesian3.fromDegreesArray(flat),material:col.withAlpha(ALPHA[st]),classificationType:C.ClassificationType.CESIUM_3D_TILE},
-      label:{show:false,text:String(b.id),font:'bold 14px Tahoma, Arial',fillColor:C.Color.WHITE,outlineColor:C.Color.BLACK,outlineWidth:3,style:C.LabelStyle.FILL_AND_OUTLINE,
-        heightReference:C.HeightReference.CLAMP_TO_3D_TILE,verticalOrigin:C.VerticalOrigin.BOTTOM,disableDepthTestDistance:Number.POSITIVE_INFINITY,
-        distanceDisplayCondition:new C.DistanceDisplayCondition(0,650),scale:1}});
+      point:{pixelSize:9,color:col,outlineColor:C.Color.WHITE,outlineWidth:2,disableDepthTestDistance:Number.POSITIVE_INFINITY},
+      label:{show:false,text:'',font:'bold 14px Tahoma, Arial',fillColor:C.Color.WHITE,showBackground:true,backgroundColor:C.Color.fromCssColorString('#08141cee'),backgroundPadding:new C.Cartesian2(9,6),
+        style:C.LabelStyle.FILL,verticalOrigin:C.VerticalOrigin.BOTTOM,pixelOffset:new C.Cartesian2(0,-16),disableDepthTestDistance:Number.POSITIVE_INFINITY}});
     bmap.set(e.id,b.id);ents.set(b.id,{e,st,col});
     for(let i=1;i<gs.length;i++){const x=v.entities.add({polygon:{hierarchy:C.Cartesian3.fromDegreesArray(gs[i].flat()),material:col.withAlpha(ALPHA[st]),classificationType:C.ClassificationType.CESIUM_3D_TILE}});bmap.set(x.id,b.id);(ents.get(b.id).x=ents.get(b.id).x||[]).push(x)}
   });
@@ -1092,8 +1092,8 @@ function flyTo(ids,tight){const dur=firstFly?0:1.4;firstFly=false;
   v.camera.flyToBoundingSphere(new C.BoundingSphere(C.Cartesian3.fromDegrees(cx,cy,12),r),{offset:new C.HeadingPitchRange(0,C.Math.toRadians(-40),r*(tight?3.2:2.6)),duration:dur});
 }
 function labelsUpdate(){
-  if(!v||!on)return;const lo=v.camera.positionCartographic.height<650;
-  ents.forEach(o=>{const sh=lo&&o.st!=='off';if(o.e.label.show!==sh)o.e.label.show=sh});
+  if(!v||!on)return;
+  ents.forEach((o,id)=>{const sel=String(id)===String(B),l=o.e.label;if(l.show!==sel){l.show=sel;if(sel){const b=bById.get(String(id));l.text=String(id)+'\n'+((b&&b.s?b.s.length:0))+' محل'}}});
 }
 function syncNow(){
   if(!v)return;
@@ -1101,7 +1101,7 @@ function syncNow(){
   dirty=false;ensureEnts();
   if(bLen!==BL.length){bById=new Map(BL.map(x=>[String(x.id),x]));bLen=BL.length}
   ents.forEach((o,id)=>{const b=bById.get(String(id));if(!b)return;const st=stOf(b);if(st===o.st)return;o.st=st;
-    const m=o.col.withAlpha(ALPHA[st]);o.e.polygon.material=m;(o.x||[]).forEach(x=>x.polygon.material=m);o.e.label.scale=st==='s'?1.35:1});
+    const m=o.col.withAlpha(ALPHA[st]);o.e.polygon.material=m;(o.x||[]).forEach(x=>x.polygon.material=m);o.e.point.pixelSize=st==='s'?13:st==='on'?9:5;o.e.point.color=o.col.withAlpha(st==='off'?.45:1)});
   if(Z!==lastZ||B!==lastB){lastZ=Z;lastB=B;
     if(B&&pos.has(B))flyTo([B],true);
     else if(Z)flyTo(BL.filter(b=>b.z==Z).map(b=>b.id),false);
@@ -1111,6 +1111,33 @@ function syncNow(){
 function sync(){ // مؤجَّل: لا يُعاد التلوين مع كل خطوة من الشريط الزمني
   if(!v)return;if(!on){dirty=true;return}
   clearTimeout(syncT);syncT=setTimeout(()=>{try{syncNow()}catch(e){console.error(e)}},150);
+}
+function computeBounds(){
+  let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;pos.forEach(p=>{x0=Math.min(x0,p[0]);x1=Math.max(x1,p[0]);y0=Math.min(y0,p[1]);y1=Math.max(y1,p[1])});
+  if(x0>x1)return null;return{x0,x1,y0,y1}}
+function setupArea(ts){
+  const C=Cesium;bnd=computeBounds();if(!bnd)return;
+  const mx=m=>m/102000,my=m=>m/110800;
+  // قصّ المجسّمات خارج جدة التاريخية (هامش 150م) — إن لم يدعمه الإصدار نكتفي بقفل الكاميرا
+  try{
+    const e=bnd,ring=[[e.x0-mx(150),e.y0-my(150)],[e.x1+mx(150),e.y0-my(150)],[e.x1+mx(150),e.y1+my(150)],[e.x0-mx(150),e.y1+my(150)]].flat();
+    ts.clippingPolygons=new C.ClippingPolygonCollection({polygons:[new C.ClippingPolygon({positions:C.Cartesian3.fromDegreesArray(ring)})],inverse:true});
+  }catch(err){console.warn('clip',err)}
+  // قفل الكاميرا (هامش 700م) وحدود التقريب
+  const ctl=v.scene.screenSpaceCameraController;ctl.minimumZoomDistance=40;ctl.maximumZoomDistance=1800;
+  v.camera.percentageChanged=0.02;let busy=false;
+  v.camera.changed.addEventListener(()=>{
+    if(busy)return;const c=v.camera.positionCartographic,L=C.Math,e=bnd;
+    const lo=L.toRadians(e.x0-mx(700)),hi=L.toRadians(e.x1+mx(700)),la=L.toRadians(e.y0-my(700)),lb=L.toRadians(e.y1+my(700));
+    const lon=Math.min(hi,Math.max(lo,c.longitude)),lat=Math.min(lb,Math.max(la,c.latitude)),h=Math.min(2200,c.height);
+    if(lon!==c.longitude||lat!==c.latitude||h!==c.height){busy=true;
+      v.camera.setView({destination:C.Cartesian3.fromRadians(lon,lat,h),orientation:{heading:v.camera.heading,pitch:v.camera.pitch,roll:0}});busy=false}
+  });
+  // ارتفاع سطح الأرض مرة واحدة لوضع النقاط فوق المجسّمات
+  ts.initialTilesLoaded.addEventListener(()=>{try{
+    const mid=C.Cartographic.fromDegrees((bnd.x0+bnd.x1)/2,(bnd.y0+bnd.y1)/2);const h=v.scene.sampleHeight(mid);
+    if(C.defined(h)){GH=h+10;ents.forEach((o,id)=>{const p=pos.get(id);if(p)o.e.position=C.Cartesian3.fromDegrees(p[0],p[1],GH)})}
+  }catch(err){console.warn('gh',err)}});
 }
 async function start(){
   if(starting)return;starting=true;
@@ -1127,6 +1154,7 @@ async function start(){
     const pr=document.createElement('div');pr.style.cssText='position:absolute;left:10px;top:10px;z-index:6;background:#0b1b24d9;color:#cfe0e8;border:1px solid #2a4350;border-radius:99px;padding:3px 10px;font-size:11px;display:none';pr.textContent='جارٍ تحميل المجسّمات…';box.appendChild(pr);
     ts.loadProgress.addEventListener((p,q)=>{pr.style.display=(p+q)>0?'block':'none'});
     v.camera.moveEnd.addEventListener(labelsUpdate);
+    setupArea(ts);
     v.screenSpaceEventHandler.setInputAction(c=>{const p=v.scene.pick(c.position);if(C.defined(p)&&p.id&&bmap.has(p.id.id))selB(String(bmap.get(p.id.id)))},C.ScreenSpaceEventType.LEFT_CLICK);
     new ResizeObserver(()=>{try{v.resize()}catch(e){}}).observe(box);
     say(null);lastZ=lastB=undefined;syncNow();
