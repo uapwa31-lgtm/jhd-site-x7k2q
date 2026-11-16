@@ -1050,7 +1050,7 @@ document.head.appendChild(css);
 const box=document.createElement('div');box.id='cz3';mw.insertBefore(box,mw.firstChild);
 const btn=document.createElement('button');btn.id='b3d';btn.type='button';btn.textContent='3D';btn.title='عرض واقعي ثلاثي الأبعاد (Google)';btn.setAttribute('aria-pressed','false');mc.appendChild(btn);
 
-let v=null,starting=false,on=false,ents=new Map(),bmap=new Map(),pos=new Map(),lastZ=undefined,lastB=undefined,hasTok=false;
+let v=null,starting=false,on=false,built=false,dirty=false,firstFly=true,bById=new Map(),bLen=-1,syncT=0,ents=new Map(),bmap=new Map(),pos=new Map(),lastZ=undefined,lastB=undefined,hasTok=false;
 const say=(h)=>{let m=box.querySelector('.m3');if(!h){if(m)m.remove();return}if(!m){m=document.createElement('div');m.className='m3';box.appendChild(m)}m.innerHTML='<div>'+h+'</div>';return m};
 const loadScript=(src)=>new Promise((ok,bad)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=()=>bad(new Error('load '+src));document.head.appendChild(s)});
 const getTok=()=>{try{return window.CESIUM_TOKEN||localStorage.getItem('cesiumTok')||''}catch(e){return window.CESIUM_TOKEN||''}};
@@ -1067,6 +1067,7 @@ function geomOf(id){ // [rings(lon/lat)] أو null
   return rs.map(r=>r.map(p=>inv3(p[0],p[1])));
 }
 function ensureEnts(){
+  if(built&&ents.size&&bLen===BL.length)return;
   const C=Cesium;v.entities.suspendEvents();
   BL.forEach(b=>{if(ents.has(b.id))return;const gs=geomOf(b.id);if(!gs)return;
     let sx=0,sy=0,k=0;gs[0].forEach(p=>{sx+=p[0];sy+=p[1];k++});const cx=sx/k,cy=sy/k;pos.set(b.id,[cx,cy]);
@@ -1074,31 +1075,42 @@ function ensureEnts(){
     const flat=gs[0].flat();
     const e=v.entities.add({position:C.Cartesian3.fromDegrees(cx,cy,0),
       polygon:{hierarchy:C.Cartesian3.fromDegreesArray(flat),material:col.withAlpha(ALPHA[st]),classificationType:C.ClassificationType.CESIUM_3D_TILE},
-      label:{text:String(b.id),font:'bold 14px Tahoma, Arial',fillColor:C.Color.WHITE,outlineColor:C.Color.BLACK,outlineWidth:3,style:C.LabelStyle.FILL_AND_OUTLINE,
+      label:{show:false,text:String(b.id),font:'bold 14px Tahoma, Arial',fillColor:C.Color.WHITE,outlineColor:C.Color.BLACK,outlineWidth:3,style:C.LabelStyle.FILL_AND_OUTLINE,
         heightReference:C.HeightReference.CLAMP_TO_3D_TILE,verticalOrigin:C.VerticalOrigin.BOTTOM,disableDepthTestDistance:Number.POSITIVE_INFINITY,
         distanceDisplayCondition:new C.DistanceDisplayCondition(0,650),scale:1}});
     bmap.set(e.id,b.id);ents.set(b.id,{e,st,col});
     for(let i=1;i<gs.length;i++){const x=v.entities.add({polygon:{hierarchy:C.Cartesian3.fromDegreesArray(gs[i].flat()),material:col.withAlpha(ALPHA[st]),classificationType:C.ClassificationType.CESIUM_3D_TILE}});bmap.set(x.id,b.id);(ents.get(b.id).x=ents.get(b.id).x||[]).push(x)}
   });
-  v.entities.resumeEvents();
+  v.entities.resumeEvents();built=true;
 }
 const mpl=(lon,lat)=>[lon*102000,lat*110800];
-function flyTo(ids,tight){
+function flyTo(ids,tight){const dur=firstFly?0:1.4;firstFly=false;
   const C=Cesium,P=ids.map(i=>pos.get(i)).filter(Boolean);if(!P.length)return;
   let cx=0,cy=0;P.forEach(p=>{cx+=p[0];cy+=p[1]});cx/=P.length;cy/=P.length;
   let r=0;P.forEach(p=>{const a=mpl(p[0]-cx,p[1]-cy);r=Math.max(r,Math.hypot(a[0],a[1]))});
   r=Math.max(tight?45:90,r*1.05);
-  v.camera.flyToBoundingSphere(new C.BoundingSphere(C.Cartesian3.fromDegrees(cx,cy,12),r),{offset:new C.HeadingPitchRange(0,C.Math.toRadians(-40),r*(tight?3.2:2.6)),duration:1.4});
+  v.camera.flyToBoundingSphere(new C.BoundingSphere(C.Cartesian3.fromDegrees(cx,cy,12),r),{offset:new C.HeadingPitchRange(0,C.Math.toRadians(-40),r*(tight?3.2:2.6)),duration:dur});
 }
-function sync(){
-  if(!v||!ents.size&&!BL.length)return;
-  ensureEnts();
-  ents.forEach((o,id)=>{const b=BL.find(x=>x.id==id);if(!b)return;const st=stOf(b);if(st===o.st)return;o.st=st;
+function labelsUpdate(){
+  if(!v||!on)return;const lo=v.camera.positionCartographic.height<650;
+  ents.forEach(o=>{const sh=lo&&o.st!=='off';if(o.e.label.show!==sh)o.e.label.show=sh});
+}
+function syncNow(){
+  if(!v)return;
+  if(!on){dirty=true;return}
+  dirty=false;ensureEnts();
+  if(bLen!==BL.length){bById=new Map(BL.map(x=>[String(x.id),x]));bLen=BL.length}
+  ents.forEach((o,id)=>{const b=bById.get(String(id));if(!b)return;const st=stOf(b);if(st===o.st)return;o.st=st;
     const m=o.col.withAlpha(ALPHA[st]);o.e.polygon.material=m;(o.x||[]).forEach(x=>x.polygon.material=m);o.e.label.scale=st==='s'?1.35:1});
-  if(on&&(Z!==lastZ||B!==lastB)){lastZ=Z;lastB=B;
+  if(Z!==lastZ||B!==lastB){lastZ=Z;lastB=B;
     if(B&&pos.has(B))flyTo([B],true);
     else if(Z)flyTo(BL.filter(b=>b.z==Z).map(b=>b.id),false);
     else flyTo(BL.map(b=>b.id),false)}
+  labelsUpdate();
+}
+function sync(){ // مؤجَّل: لا يُعاد التلوين مع كل خطوة من الشريط الزمني
+  if(!v)return;if(!on){dirty=true;return}
+  clearTimeout(syncT);syncT=setTimeout(()=>{try{syncNow()}catch(e){console.error(e)}},150);
 }
 async function start(){
   if(starting)return;starting=true;
@@ -1109,12 +1121,15 @@ async function start(){
     let tok=getTok();if(!tok)tok=await askTok();
     const C=Cesium;C.Ion.defaultAccessToken=tok;say('جارٍ تحميل مجسّمات Google...');
     v=new C.Viewer(box,{globe:false,baseLayerPicker:false,geocoder:false,homeButton:false,sceneModePicker:false,navigationHelpButton:false,animation:false,timeline:false,fullscreenButton:false,infoBox:false,selectionIndicator:false,skyAtmosphere:new C.SkyAtmosphere()});
-    v.scene.globe=undefined;
+    v.scene.globe=undefined;v.resolutionScale=Math.min(1,1.5/(window.devicePixelRatio||1));ensureEnts();lastZ=lastB=undefined;syncNow();say('جارٍ تحميل مجسّمات Google... (قد يستغرق أول مرة)');
     const ts=C.createGooglePhotorealistic3DTileset?await C.createGooglePhotorealistic3DTileset():await C.Cesium3DTileset.fromIonAssetId(2275207);
-    v.scene.primitives.add(ts);
+    ts.maximumScreenSpaceError=20;ts.skipLevelOfDetail=true;ts.preferLeaves=false;v.scene.primitives.add(ts);
+    const pr=document.createElement('div');pr.style.cssText='position:absolute;left:10px;top:10px;z-index:6;background:#0b1b24d9;color:#cfe0e8;border:1px solid #2a4350;border-radius:99px;padding:3px 10px;font-size:11px;display:none';pr.textContent='جارٍ تحميل المجسّمات…';box.appendChild(pr);
+    ts.loadProgress.addEventListener((p,q)=>{pr.style.display=(p+q)>0?'block':'none'});
+    v.camera.moveEnd.addEventListener(labelsUpdate);
     v.screenSpaceEventHandler.setInputAction(c=>{const p=v.scene.pick(c.position);if(C.defined(p)&&p.id&&bmap.has(p.id.id))selB(String(bmap.get(p.id.id)))},C.ScreenSpaceEventType.LEFT_CLICK);
     new ResizeObserver(()=>{try{v.resize()}catch(e){}}).observe(box);
-    say(null);lastZ=lastB=undefined;sync();
+    say(null);lastZ=lastB=undefined;syncNow();
   }catch(err){
     console.error('3D',err);let t=String(err&&err.message||err);
     const bad=/401|unauthor|token|invalid/i.test(t);
@@ -1126,7 +1141,7 @@ async function start(){
 function toggle(f){
   on=f===undefined?!on:f;mw.classList.toggle('v3d',on);btn.setAttribute('aria-pressed',on);
   if(v)v.useDefaultRenderLoop=on;
-  if(on){if(!v&&!starting)start();else if(v){lastZ=lastB=undefined;sync();try{v.resize()}catch(e){}}}
+  if(on){if(!v&&!starting)start();else if(v){lastZ=lastB=undefined;syncNow();try{v.resize()}catch(e){}}}
 }
 btn.addEventListener('click',()=>toggle());
 mc.addEventListener('click',e=>{ // أزرار التكبير تعمل على مشهد 3D عندما يكون مفتوحاً
