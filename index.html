@@ -1010,6 +1010,7 @@ function exDraw(){const e=$('exdw');if(!e)return;const k=Z||'all',P=execPage(k);
   iv.innerHTML=`<h4><i></i>المفتشون<span class="tot">آخر 7 أيام</span></h4><div class="mr"><div><div class="n">${o.filter(x=>x.w>0).length}</div><div class="sub">مفتشون نشطون من ${o.length}</div></div></div><div class="exzl">`+o.slice(0,6).map(({d,w,t})=>`<div class="exr exi2" data-einsp="${esc(d.n)}" title="اليوم ${t} · جودة ${d.qual.toFixed(0)}% · متوسط ${d.avgS.toFixed(0)} محل/يوم"><b>${esc(d.n)}</b><div class="bb"><i style="width:${w/im*100}%;background:#E3B778"></i></div><span>${f(w)}</span></div>`).join('')+`</div><div class="hint2">اضغط على مفتش لعرض تفاصيله</div>`}}
 const _rn=render;render=function(){_rn();exDraw()};
 window.addEventListener('hashchange',route);
+if(location.hash&&location.hash!='#/'&&location.hash!='#')history.replaceState(null,'','#/');
 draw();route();
 setInterval(()=>{const n=off(13);if(DY[0]!=n){mkDays();draw();if(!pg.hidden)route()}},60000);
 
@@ -1354,7 +1355,8 @@ function zonesDraw(){const xl=$('exl');if(!xl)return;xl.classList.add('zl2');
  const r=range(),SA=shopsAll().filter(s=>inR(s.d,r)),zs={};
  const add=(z,id)=>{(zs[z]=zs[z]||new Set()).add(String(id))};
  SA.forEach(s=>add(s.z,s.b.id));if(!r)BL.forEach(b=>add(b.z,b.id));
- (window.JBD||[]).forEach(x=>{if(inR(x.d,r)){const b=BL.find(q=>String(q.id)==String(x.b));if(b)add(b.z,x.b)}});
+ (window.JSH||[]).forEach(x=>{if(x.z&&inR(x.d,r))add(x.z,x.b)});
+ (window.JBD||[]).forEach(x=>{if(inR(x.d,r)){const b=BL.find(q=>String(q.id)==String(x.b)),z=b?b.z:(D.sh[x.b]||{}).z;if(z)add(z,x.b)}});
  const cnt={};for(const k in zs)cnt[k]=zs[k].size;
  const un=(window.NSB||[]).length-BL.filter(b=>!b.n).length;
  let totB;if(!r)totB=BL.length+Math.max(0,un);else{const st=new Set();for(const k in zs)zs[k].forEach(x=>st.add(x));totB=st.size}
@@ -1433,7 +1435,7 @@ function heroSet(mode){const in_=hero.querySelector('.in');if(!in_||!hero.queryS
   if(h1b){h1b.textContent=_oh;in_.insertBefore(h1b,in_.firstChild)}
   if(go){if(gx)go.insertBefore(gx,go.firstChild);if(gi)go.insertBefore(gi,go.firstChild)}
   if(td){td.textContent=_ot0;in_.appendChild(td)}}}
-function all(){try{const _ex=document.body.classList.contains('ex3'),_dm=location.hash=='#/dash'&&!_ex;document.body.classList.toggle('dm',_dm);heroSet(_ex?'h':_dm?'m':'d');tdyDraw();nxDraw();cardsDraw();zonesDraw();topDraw();tilesDraw();cardDraw()}catch(e){console.error('ui2',e)}}
+function all(){try{const _ex=document.body.classList.contains('ex3'),_dm=(location.hash=='#/dash'||/^#\/inspectors/.test(decodeURIComponent(location.hash)))&&!_ex;document.body.classList.toggle('dm',_dm);heroSet(_ex?'h':_dm?'m':'d');tdyDraw();nxDraw();cardsDraw();zonesDraw();topDraw();tilesDraw();cardDraw()}catch(e){console.error('ui2',e)}}
 const _r2=render;render=function(){_r2();all()};
 window.addEventListener('hashchange',()=>{setTimeout(all,0)});
 /* ---------- تلميح الرسوم (التاريخ عند المرور) ---------- */
