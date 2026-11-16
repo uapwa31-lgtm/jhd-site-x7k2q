@@ -1198,6 +1198,7 @@ body:not(.ex3) #zs .zc .zn{font-size:15px}
 body:not(.ex3) #zs .zc{display:flex;flex-direction:column;height:100%;box-sizing:border-box}
 body:not(.ex3) #zs .zc>:last-child{margin-top:auto}
 body:not(.ex3) #zs .zc .zch{min-height:84px;align-content:flex-start}
+body.ip .hero .ks,body.ip .hero .navb,body.ip .hero .gz{display:none!important}
 .hero .ttl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.hero .ttl h1{margin:0}
 .hnav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;position:relative}
 .hnav .hb{font:inherit;font-size:13px;font-weight:700;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;border:1px solid #ffffff3d;background:#ffffff14;color:#fff;cursor:pointer;white-space:nowrap}
@@ -1356,16 +1357,16 @@ function zonesDraw(){const xl=$('exl');if(!xl)return;xl.classList.add('zl2');
  const add=(z,id)=>{(zs[z]=zs[z]||new Set()).add(String(id))};
  SA.forEach(s=>add(s.z,s.b.id));if(!r)BL.forEach(b=>add(b.z,b.id));
  (window.JSH||[]).forEach(x=>{if(x.z&&inR(x.d,r))add(x.z,x.b)});
- (window.JBD||[]).forEach(x=>{if(inR(x.d,r)){const b=BL.find(q=>String(q.id)==String(x.b)),z=b?b.z:(D.sh[x.b]||{}).z;if(z)add(z,x.b)}});
+ (window.JBD||[]).forEach(x=>{if(inR(x.d,r)){const b=BL.find(q=>String(q.id)==String(x.b)),z=b?b.z:(D.sh[x.b]||{}).z;add(z||'؟',x.b)}});
  const cnt={};for(const k in zs)cnt[k]=zs[k].size;
  const un=(window.NSB||[]).length-BL.filter(b=>!b.n).length;
  let totB;if(!r)totB=BL.length+Math.max(0,un);else{const st=new Set();for(const k in zs)zs[k].forEach(x=>st.add(x));totB=st.size}
  const sumZ=Object.values(cnt).reduce((a,b)=>a+b,0)||1,GB=getGoalB(),rem=Math.max(0,GB-totB);
- const L=ZK.map(k=>[k,cnt[k]||0]).sort((a,b)=>b[1]-a[1]),mx=Math.max(1,...L.map(x=>x[1]));
+ const L=ZK.map(k=>[k,cnt[k]||0]).sort((a,b)=>b[1]-a[1]),mx=Math.max(1,...L.map(x=>x[1]),cnt['؟']||0),uzn=cnt['؟']||0;
  xl.innerHTML=`<div id="gslot"></div><h3>الزونات <small style="font-size:10.5px;color:var(--mut);font-weight:400">عدد المباني الممسوحة · ${perLabel()}</small></h3>
  <button type="button" class="zx ${Z?'':'on'}" data-zx="" title="مبانٍ ممسوحة ${fm(totB)} من هدف ${fm(GB)} · باقي ${fm(rem)}"><b>الكل</b><div class="tk"><i style="width:${Math.min(100,totB/Math.max(1,GB)*100)}%"></i></div><span>${fm(totB)}</span><em dir="ltr">${Math.round(Math.min(100,totB/Math.max(1,GB)*100))}%</em></button>
  <p class="zcap">الكل: نسبة الممسوح من هدف المباني (باقي ${fm(rem)}) · الزونات: حصة كل زون من الممسوح</p>`+
- L.map(([k,v])=>`<button type="button" class="zx ${Z==k?'on':''}" data-zx="${k}" title="${esc(ZN(k))}"><b>${k}</b><div class="tk"><i style="width:${v/mx*100}%"></i></div><span>${fm(v)}</span><em dir="ltr">${pcs(v,sumZ)}</em></button>`).join('');
+ L.map(([k,v])=>`<button type="button" class="zx ${Z==k?'on':''}" data-zx="${k}" title="${esc(ZN(k))}"><b>${k}</b><div class="tk"><i style="width:${v/mx*100}%"></i></div><span>${fm(v)}</span><em dir="ltr">${pcs(v,sumZ)}</em></button>`).join('')+(uzn?`<div class="zx" title="مبانٍ جديدة لا تتوفر لها إحداثيات أو زون"><b>؟</b><div class="tk"><i style="width:${uzn/mx*100}%"></i></div><span>${fm(uzn)}</span><em dir="ltr">غير محدد</em></div>`:'');
  if(window._gsz&&document.body.classList.contains('ex3')){const sl=$('gslot');if(sl)sl.appendChild(window._gsz)}}
 
 /* ---------- أعلى المباني حسب الحالة ---------- */
@@ -1435,7 +1436,7 @@ function heroSet(mode){const in_=hero.querySelector('.in');if(!in_||!hero.queryS
   if(h1b){h1b.textContent=_oh;in_.insertBefore(h1b,in_.firstChild)}
   if(go){if(gx)go.insertBefore(gx,go.firstChild);if(gi)go.insertBefore(gi,go.firstChild)}
   if(td){td.textContent=_ot0;in_.appendChild(td)}}}
-function all(){try{const _ex=document.body.classList.contains('ex3'),_dm=(location.hash=='#/dash'||/^#\/inspectors/.test(decodeURIComponent(location.hash)))&&!_ex;document.body.classList.toggle('dm',_dm);heroSet(_ex?'h':_dm?'m':'d');tdyDraw();nxDraw();cardsDraw();zonesDraw();topDraw();tilesDraw();cardDraw()}catch(e){console.error('ui2',e)}}
+function all(){try{const _ex=document.body.classList.contains('ex3'),_dm=(location.hash=='#/dash'||/^#\/inspectors/.test(decodeURIComponent(location.hash)))&&!_ex;document.body.classList.toggle('dm',_dm);document.body.classList.toggle('ip',/^#\/inspectors/.test(decodeURIComponent(location.hash))&&!_ex);heroSet(_ex?'h':_dm?'m':'d');tdyDraw();nxDraw();cardsDraw();zonesDraw();topDraw();tilesDraw();cardDraw()}catch(e){console.error('ui2',e)}}
 const _r2=render;render=function(){_r2();all()};
 window.addEventListener('hashchange',()=>{setTimeout(all,0)});
 /* ---------- تلميح الرسوم (التاريخ عند المرور) ---------- */
