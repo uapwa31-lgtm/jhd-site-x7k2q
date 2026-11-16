@@ -1045,6 +1045,7 @@ const css=document.createElement('style');css.textContent=`
 #cz3 .m3>div{pointer-events:auto;max-width:360px;background:rgba(11,27,36,.94);border:1px solid #2a4350;border-radius:14px;padding:14px 16px;font-size:13px;line-height:1.9;color:#cfe0e8}
 #cz3 .m3 b{display:block;font-size:15px;margin-bottom:4px}#cz3 .m3 input{width:100%;box-sizing:border-box;margin:8px 0;padding:9px 11px;border-radius:9px;border:1px solid #2f5062;background:#142a35;color:#fff;font:12px monospace;direction:ltr}
 #cz3 .m3 button{width:auto;height:auto;padding:7px 16px;border-radius:999px;font-size:13px}
+#c9{position:absolute;z-index:5;pointer-events:none;transform:translate(-50%,-100%);text-align:center;color:#fff;-webkit-text-stroke:4px #000;paint-order:stroke fill;line-height:1.15;display:none;direction:rtl;font-family:Tahoma,Arial,sans-serif}#c9 b{display:block;font-size:26px}#c9 span{font-size:13px;font-weight:700}
 #b3d{font-size:12px;font-weight:700}.mw.v3d #b3d{background:var(--accent,#1a8fa8);color:#fff}`;
 document.head.appendChild(css);
 const box=document.createElement('div');box.id='cz3';mw.insertBefore(box,mw.firstChild);
@@ -1091,10 +1092,7 @@ function flyTo(ids,tight){const dur=firstFly?0:1.4;firstFly=false;
   v.camera.flyToBoundingSphere(new C.BoundingSphere(C.Cartesian3.fromDegrees(cx,cy,12),r),{offset:new C.HeadingPitchRange(0,C.Math.toRadians(-40),r*(tight?3.2:2.6)),duration:dur});
 }
 let HV=null;
-function labelsUpdate(){
-  if(!v||!on)return;
-  ents.forEach((o,id)=>{const sid=String(id),sel=sid===String(B)||sid===HV,l=o.e.label;if(l.show!==sel){l.show=sel;if(sel){const b=bById.get(sid);l.text=sid+'\n'+((b&&b.s?b.s.length:0))+' محل'}}});
-}
+function labelsUpdate(){}
 function syncNow(){
   if(!v)return;
   if(!on){dirty=true;return}
@@ -1124,12 +1122,20 @@ function setupArea(ts){
     ts.clippingPolygons=new C.ClippingPolygonCollection({polygons:[new C.ClippingPolygon({positions:C.Cartesian3.fromDegreesArray(ring)})],inverse:true});
   }catch(err){console.warn('clip',err)}
   // قفل الكاميرا (هامش 700م) وحدود التقريب
-  const ctl=v.scene.screenSpaceCameraController;ctl.minimumZoomDistance=40;ctl.maximumZoomDistance=1800;
+  const sp=Math.max((bnd.x1-bnd.x0)*102000,(bnd.y1-bnd.y0)*110800);
+  v.scene.backgroundColor=C.Color.fromCssColorString('#0b191c');try{v.scene.skyBox&&(v.scene.skyBox.show=false);v.scene.sun&&(v.scene.sun.show=false);v.scene.moon&&(v.scene.moon.show=false);v.scene.skyAtmosphere&&(v.scene.skyAtmosphere.show=false)}catch(err){}
+  const ctl=v.scene.screenSpaceCameraController;ctl.minimumZoomDistance=40;ctl.maximumZoomDistance=Math.max(350,sp*0.85);
+  let c9=box.querySelector('#c9');if(!c9){c9=document.createElement('div');c9.id='c9';box.appendChild(c9)}
+  v.scene.postRender.addEventListener(()=>{
+    const id=HV||(B?String(B):null),p=id&&pos.get(id);if(!p){c9.style.display='none';return}
+    const q=v.scene.cartesianToCanvasCoordinates(C.Cartesian3.fromDegrees(p[0],p[1],GH+8));if(!q){c9.style.display='none';return}
+    if(c9._id!==id){c9._id=id;const b=bById.get(id);c9.innerHTML='<b>'+id+'</b><span>'+((b&&b.s?b.s.length:0))+' محل</span>'}
+    c9.style.left=q.x+'px';c9.style.top=q.y+'px';c9.style.display='block'});
   v.camera.percentageChanged=0.02;let busy=false;
   v.camera.changed.addEventListener(()=>{
     if(busy)return;const c=v.camera.positionCartographic,L=C.Math,e=bnd;
-    const lo=L.toRadians(e.x0-mx(700)),hi=L.toRadians(e.x1+mx(700)),la=L.toRadians(e.y0-my(700)),lb=L.toRadians(e.y1+my(700));
-    const lon=Math.min(hi,Math.max(lo,c.longitude)),lat=Math.min(lb,Math.max(la,c.latitude)),h=Math.min(2200,c.height);
+    const lo=L.toRadians(e.x0-mx(60)),hi=L.toRadians(e.x1+mx(60)),la=L.toRadians(e.y0-my(60)),lb=L.toRadians(e.y1+my(60));
+    const lon=Math.min(hi,Math.max(lo,c.longitude)),lat=Math.min(lb,Math.max(la,c.latitude)),h=Math.min(Math.max(350,sp*0.85)+200,c.height);
     if(lon!==c.longitude||lat!==c.latitude||h!==c.height){busy=true;
       v.camera.setView({destination:C.Cartesian3.fromRadians(lon,lat,h),orientation:{heading:v.camera.heading,pitch:v.camera.pitch,roll:0}});busy=false}
   });
